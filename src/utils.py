@@ -26,5 +26,6 @@ def resolve_attr(obj, attr, default = np.nan):
 def merge_retweet_full_text(data: pd.DataFrame) -> pd.DataFrame:
     """Replaces truncated retweet text in full_text with the true full text"""
     data = data.copy()
+    data['is_retweet'] = ~pd.isna(data['retweeted_status.full_text'])
     data.loc[~data['retweeted_status.full_text'].isna(),'full_text'] = data.loc[~pd.isna(data['retweeted_status.full_text']),'retweeted_status.full_text']
     return data
